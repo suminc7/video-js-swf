@@ -40,6 +40,7 @@ package{
             // Allow JS calls from other domains
             Security.allowDomain("*");
             Security.allowInsecureDomain("*");
+            Security.loadPolicyFile("http://www.flashls.org/crossdomain.xml");
 
             if(loaderInfo.hasOwnProperty("uncaughtErrorEvents")){
                 // we'll want to suppress ANY uncaught debug errors in production (for the sake of ux)

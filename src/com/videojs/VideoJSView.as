@@ -22,6 +22,7 @@ package com.videojs{
         private var _uiBackground:Sprite;
 
         private var _model:VideoJSModel;
+        private var m3d : MainView;
 
         public function VideoJSView(){
 
@@ -46,6 +47,10 @@ package com.videojs{
 
             _model.videoReference = _uiVideo;
 
+
+//            m3d = new MainView();
+//            m3d.video = _uiVideo;
+//            addChild(m3d);
         }
 
 
@@ -111,11 +116,17 @@ package com.videojs{
         }
 
         private function onMetaData(e:VideoPlaybackEvent):void{
+//            ExternalInterface.call('console.log', 'onmeta');
+//            ExternalInterface.call('console.log', e);
             sizeVideoObject();
+//            m3d.onMetaData(_model.metadata.width, _model.metadata.height);
         }
 
         private function onDimensionUpdate(e:VideoPlaybackEvent):void{
+//            ExternalInterface.call('console.log', 'ondimen');
+//            ExternalInterface.call('console.log', e);
             sizeVideoObject();
+//            m3d.onMetaData(_model.metadata.width, _model.metadata.height);
         }
 
     }
