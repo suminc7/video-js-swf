@@ -22,7 +22,8 @@ import gs.TweenLite;
 	public class MainView extends BasicView {
 		
 //		private const URL : String = "http://www.flashls.org/playlists/test_001/stream.m3u8";
-		private const URL : String = "videos/9_2160_1080_1472221166831.mp4";
+		private const URL : String = "videos/14_2160_1080_1472223755054.mp4";
+//		private const URL : String = "http://content.epiqvr.com/local/contents/z2Xhzehgm%2BuPCsyV1DCMlEmIrZBi1cFgf1euqCVZjtE%3D/vSPs_1p3g94FKLYEYDgndA%3D%3D/2016/09/08/3770/3770_0_0_1473324819434_1080p/3770_0_0_1473324819434.m3u8";
 //		private const URL : String = "videos/Metlife.mp4";
 		private const BOTTOM_URL : String = "videos/bottom.flv";
 		private const BOTTOM_SIZE : int = 500;
@@ -123,7 +124,7 @@ import gs.TweenLite;
 			_sphereMaterial = new BitmapMaterial(_bitmapData);
 			_sphereMaterial.smooth = true;
 			_sphereMaterial.doubleSided = true;
-			_sphere = new Sphere(_sphereMaterial, 200, 64, 48);
+			_sphere = new Sphere(_sphereMaterial, 100, 32, 24);
 			_sphere.rotationY = -90;
 			_sphere.scaleX = -1;
 			scene.addChild(_sphere);
@@ -141,8 +142,10 @@ import gs.TweenLite;
 
 		public function onMetaData(width:int, height:int):void {
 
-//            ExternalInterface.call('console.log', width);
-            if(width != 0) return;
+            trace(width);
+
+            ExternalInterface.call('console.log', width);
+            if(width == 0) return;
             if(_videoWidth != 0) return;
             _videoWidth = width;
             _videoHeight = height;
@@ -157,32 +160,34 @@ import gs.TweenLite;
 
 			addChild(_mouse360 = new Mouse360());
 
-			var nc : NetConnection = new NetConnection();
-			nc.connect(null);
-			var client : Object = new Object();
-
-			client.onMetaData = function(o : Object) : void {
-				if(_videoWidth != 0) return;
-				_videoWidth = o.width;
-				_videoHeight = o.height;
-				_videoMatrix.scale(_videoWidth / 320, _videoHeight / 240);
-				init3D();
-			};
-
-			_netStream = new NetStream(nc);
-			_netStream.addEventListener(NetStatusEvent.NET_STATUS, eStatus);
-			_netStream.client = client;
 
 			CONFIG::debugging {
-                trace('debug');
-				// Execute debugging code here.
-			}
-//                _netStream.play(URL);
-//                _video = new Video();
-//                _video.attachNetStream(_netStream);
 
-			//test
-			//test end
+                trace('debugging');
+
+                var nc : NetConnection = new NetConnection();
+                nc.connect(null);
+                var client : Object = new Object();
+
+                client.onMetaData = function(o : Object) : void {
+                    trace('onMetaData');
+                    if(_videoWidth != 0) return;
+                    _videoWidth = o.width;
+                    _videoHeight = o.height;
+                    _videoMatrix.scale(_videoWidth / 320, _videoHeight / 240);
+                    init3D();
+                };
+
+                _netStream = new NetStream(nc);
+                _netStream.addEventListener(NetStatusEvent.NET_STATUS, eStatus);
+                _netStream.client = client;
+				// Execute debugging code here.
+
+                _netStream.play(URL);
+//                _video = new Video();
+                _video.attachNetStream(_netStream);
+			}
+
 
 			_videoMatrix = new Matrix();
 		}

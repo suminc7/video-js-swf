@@ -48,9 +48,9 @@ package com.videojs{
             _model.videoReference = _uiVideo;
 
 
-//            m3d = new MainView();
-//            m3d.video = _uiVideo;
-//            addChild(m3d);
+            m3d = new MainView();
+            m3d.video = _uiVideo;
+            addChild(m3d);
         }
 
 
@@ -120,13 +120,17 @@ package com.videojs{
 //            ExternalInterface.call('console.log', e);
             sizeVideoObject();
 //            m3d.onMetaData(_model.metadata.width, _model.metadata.height);
+//            m3d.onMetaData(e.data.videoWidth, e.data.videoHeight);
         }
 
         private function onDimensionUpdate(e:VideoPlaybackEvent):void{
+
+
+
 //            ExternalInterface.call('console.log', 'ondimen');
 //            ExternalInterface.call('console.log', e);
             sizeVideoObject();
-//            m3d.onMetaData(_model.metadata.width, _model.metadata.height);
+            m3d.onMetaData(e.data.videoWidth, e.data.videoHeight);
         }
 
     }

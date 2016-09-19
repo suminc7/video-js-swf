@@ -21,7 +21,7 @@ package{
     import flash.utils.Timer;
     import flash.utils.setTimeout;
 
-    [SWF(backgroundColor="#000000", frameRate="60", width="480", height="270")]
+    [SWF(backgroundColor="#000000", frameRate="30", width="940", height="529")]
     public class VideoJS extends Sprite{
 
         public const VERSION:String = CONFIG::version;
@@ -40,7 +40,6 @@ package{
             // Allow JS calls from other domains
             Security.allowDomain("*");
             Security.allowInsecureDomain("*");
-            Security.loadPolicyFile("http://www.flashls.org/crossdomain.xml");
 
             if(loaderInfo.hasOwnProperty("uncaughtErrorEvents")){
                 // we'll want to suppress ANY uncaught debug errors in production (for the sake of ux)
