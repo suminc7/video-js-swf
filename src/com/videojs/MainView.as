@@ -22,8 +22,8 @@ import gs.TweenLite;
 	public class MainView extends BasicView {
 		
 //		private const URL : String = "http://www.flashls.org/playlists/test_001/stream.m3u8";
-		private const URL : String = "videos/14_2160_1080_1472223755054.mp4";
-//		private const URL : String = "http://content.epiqvr.com/local/contents/z2Xhzehgm%2BuPCsyV1DCMlEmIrZBi1cFgf1euqCVZjtE%3D/vSPs_1p3g94FKLYEYDgndA%3D%3D/2016/09/08/3770/3770_0_0_1473324819434_1080p/3770_0_0_1473324819434.m3u8";
+//		private const URL : String = "videos/14_2160_1080_1472223755054.mp4";
+		private const URL : String = "https://content.epiqvr.com/local/contents/ADSUuj8PzUOJ1_BiRtJM0l9B79YFZh0dnmB%2BB3_Fdec%3D/vSPs_1p3g94FKLYEYDgndA%3D%3D/2016/09/08/3446/3446_0_0_1473323909824_720p/3446_0_0_1473323909824.m3u8";
 //		private const URL : String = "videos/Metlife.mp4";
 		private const BOTTOM_URL : String = "videos/bottom.flv";
 		private const BOTTOM_SIZE : int = 500;
