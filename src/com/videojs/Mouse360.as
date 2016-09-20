@@ -23,8 +23,8 @@ package com.videojs {
 			addEventListener(Event.ADDED_TO_STAGE, eAdded);
 
 			addChild(startShape = new Shape());
-			startShape.graphics.beginFill(0x999999);
-			startShape.graphics.drawCircle(0, 0, 2);
+//			startShape.graphics.beginFill(0x999999);
+//			startShape.graphics.drawCircle(0, 0, 2);
 			addChild(endShape = new Shape());
 			addChild(arShape = new Shape());
 
@@ -32,12 +32,12 @@ package com.videojs {
 			var w : int = -10; // ARROW LINE WIDTH
 
 			// DRAW ARROW
-			arShape.graphics.lineStyle(0, 0x999999);
-			arShape.graphics.lineTo(0, -l);
-			arShape.graphics.moveTo(0, 0);
-			arShape.graphics.lineTo(w, - w);
-			arShape.graphics.moveTo(0, 0);
-			arShape.graphics.lineTo(-w, - w);
+//			arShape.graphics.lineStyle(0, 0x999999);
+//			arShape.graphics.lineTo(0, -l);
+//			arShape.graphics.moveTo(0, 0);
+//			arShape.graphics.lineTo(w, - w);
+//			arShape.graphics.moveTo(0, 0);
+//			arShape.graphics.lineTo(-w, - w);
 			visible = false;
 		}
 

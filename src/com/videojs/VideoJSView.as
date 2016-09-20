@@ -43,6 +43,7 @@ package com.videojs{
             _uiVideo.width = _model.stageRect.width;
             _uiVideo.height = _model.stageRect.height;
             _uiVideo.smoothing = true;
+
             addChild(_uiVideo);
 
             _model.videoReference = _uiVideo;
@@ -51,6 +52,10 @@ package com.videojs{
             m3d = new MainView();
             m3d.video = _uiVideo;
             addChild(m3d);
+
+
+            removeChild(_uiVideo);
+
         }
 
 
@@ -119,7 +124,7 @@ package com.videojs{
 //            ExternalInterface.call('console.log', 'onmeta');
 //            ExternalInterface.call('console.log', e);
             sizeVideoObject();
-//            m3d.onMetaData(_model.metadata.width, _model.metadata.height);
+            m3d.onMetaData(_model.metadata.width, _model.metadata.height);
 //            m3d.onMetaData(e.data.videoWidth, e.data.videoHeight);
         }
 
@@ -130,7 +135,7 @@ package com.videojs{
 //            ExternalInterface.call('console.log', 'ondimen');
 //            ExternalInterface.call('console.log', e);
             sizeVideoObject();
-            m3d.onMetaData(e.data.videoWidth, e.data.videoHeight);
+//            m3d.onMetaData(e.data.videoWidth, e.data.videoHeight);
         }
 
     }

@@ -1,5 +1,6 @@
 package com.videojs  {
 	import flash.display.BitmapData;
+import flash.display.Sprite;
 import flash.events.ErrorEvent;
 import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -15,7 +16,8 @@ import gs.TweenLite;
 import org.mangui.hls.utils.Log;
 
 import org.papervision3d.materials.BitmapMaterial;
-	import org.papervision3d.objects.primitives.Plane;
+import org.papervision3d.materials.VideoStreamMaterial;
+import org.papervision3d.objects.primitives.Plane;
 	import org.papervision3d.objects.primitives.Sphere;
 	import org.papervision3d.view.BasicView;
 
@@ -24,9 +26,10 @@ import org.papervision3d.materials.BitmapMaterial;
 	 */
 	public class MainView extends BasicView {
 		
+		private const URL : String = "";
 //		private const URL : String = "http://www.flashls.org/playlists/test_001/stream.m3u8";
 //		private const URL : String = "videos/14_2160_1080_1472223755054.mp4";
-		private const URL : String = "https://content.epiqvr.com/local/contents/ADSUuj8PzUOJ1_BiRtJM0l9B79YFZh0dnmB%2BB3_Fdec%3D/vSPs_1p3g94FKLYEYDgndA%3D%3D/2016/09/08/3446/3446_0_0_1473323909824_720p/3446_0_0_1473323909824.m3u8";
+//		private const URL : String = "https://content.epiqvr.com/local/contents/ADSUuj8PzUOJ1_BiRtJM0l9B79YFZh0dnmB%2BB3_Fdec%3D/vSPs_1p3g94FKLYEYDgndA%3D%3D/2016/09/08/3446/3446_0_0_1473323909824_720p/3446_0_0_1473323909824.m3u8";
 //		private const URL : String = "videos/Metlife.mp4";
 		private const BOTTOM_URL : String = "videos/bottom.flv";
 		private const BOTTOM_SIZE : int = 500;
@@ -101,6 +104,9 @@ import org.papervision3d.materials.BitmapMaterial;
 
 
 
+
+
+
 			camera.rotationX += _mouse360.rotate.x;
 			camera.rotationY += _mouse360.rotate.y;
 
@@ -120,11 +126,18 @@ import org.papervision3d.materials.BitmapMaterial;
 //            Log.info("init3D 4");
 //            Log.info(_videoWidth);
 //            Log.info(_videoHeight);
+
+
+            try {
                 _bitmapData.draw(_video, _videoMatrix);
+            }
+            catch(error:Error){
+                Log.info(error);
+            }
 
 
 //            Log.info(_video);
-            Log.info("init3D 5");
+//            Log.info("init3D 5");
 //			if (_drawBottom) {
 //				_bitmapDataBottom.fillRect(_bitmapDataBottom.rect, 0x00000000);
 //				_bitmapDataBottom.draw(_videoBottom, _matrixBottom);
@@ -132,12 +145,11 @@ import org.papervision3d.materials.BitmapMaterial;
 		}
 
 		private function init3D() : void {
-
-            Log.info("init3D 1");
-            Log.info(_videoWidth);
+//            Log.info("init3D 1");
 
 			_bitmapData = new BitmapData(_videoWidth, _videoWidth / 2, false, 0x000000) ;
 			_sphereMaterial = new BitmapMaterial(_bitmapData);
+
 			_sphereMaterial.smooth = true;
 			_sphereMaterial.doubleSided = true;
 			_sphere = new Sphere(_sphereMaterial, 100, 32, 24);
@@ -147,8 +159,7 @@ import org.papervision3d.materials.BitmapMaterial;
 			camera.fov = 75;
 			camera.z = 0;
 
-            Log.info("init3D 2");
-            Log.info(_videoWidth);
+
 
 			addEventListener(Event.ENTER_FRAME, loop3D);
 
@@ -259,5 +270,12 @@ import org.papervision3d.materials.BitmapMaterial;
             _video = video;
         }
 
+        public function get ns():NetStream {
+            return _netStream;
+        }
+
+        public function set ns(ns:NetStream):void {
+            _netStream = ns;
+        }
 	}
 }
