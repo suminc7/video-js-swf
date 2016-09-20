@@ -1,6 +1,7 @@
 package com.videojs  {
 	import flash.display.BitmapData;
-	import flash.events.Event;
+import flash.events.ErrorEvent;
+import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.NetStatusEvent;
 import flash.external.ExternalInterface;
@@ -11,7 +12,9 @@ import flash.geom.Matrix;
 import flash.ui.Keyboard;
 
 import gs.TweenLite;
-	import org.papervision3d.materials.BitmapMaterial;
+import org.mangui.hls.utils.Log;
+
+import org.papervision3d.materials.BitmapMaterial;
 	import org.papervision3d.objects.primitives.Plane;
 	import org.papervision3d.objects.primitives.Sphere;
 	import org.papervision3d.view.BasicView;
@@ -96,6 +99,8 @@ import gs.TweenLite;
 
 		private function loop3D(event : Event) : void {
 
+
+
 			camera.rotationX += _mouse360.rotate.x;
 			camera.rotationY += _mouse360.rotate.y;
 
@@ -107,18 +112,29 @@ import gs.TweenLite;
 				camera.rotationX = 90;
 
 			_mouse360.update();
-			
-			_bitmapData.draw(_video, _videoMatrix);
+            try{
+            }catch(e:ErrorEvent){
+                Log.info(e);
+            }
 
-			if (_drawBottom) {
-				_bitmapDataBottom.fillRect(_bitmapDataBottom.rect, 0x00000000);
-				_bitmapDataBottom.draw(_videoBottom, _matrixBottom);
-			}
+//            Log.info("init3D 4");
+//            Log.info(_videoWidth);
+//            Log.info(_videoHeight);
+                _bitmapData.draw(_video, _videoMatrix);
+
+
+//            Log.info(_video);
+            Log.info("init3D 5");
+//			if (_drawBottom) {
+//				_bitmapDataBottom.fillRect(_bitmapDataBottom.rect, 0x00000000);
+//				_bitmapDataBottom.draw(_videoBottom, _matrixBottom);
+//			}
 		}
 
 		private function init3D() : void {
 
-
+            Log.info("init3D 1");
+            Log.info(_videoWidth);
 
 			_bitmapData = new BitmapData(_videoWidth, _videoWidth / 2, false, 0x000000) ;
 			_sphereMaterial = new BitmapMaterial(_bitmapData);
@@ -131,7 +147,8 @@ import gs.TweenLite;
 			camera.fov = 75;
 			camera.z = 0;
 
-
+            Log.info("init3D 2");
+            Log.info(_videoWidth);
 
 			addEventListener(Event.ENTER_FRAME, loop3D);
 
@@ -144,7 +161,7 @@ import gs.TweenLite;
 
             trace(width);
 
-            ExternalInterface.call('console.log', width);
+//            ExternalInterface.call('console.log', width);
             if(width == 0) return;
             if(_videoWidth != 0) return;
             _videoWidth = width;
