@@ -93,8 +93,8 @@ package com.videojs {
 		}
 
 		private function slow() : void {
-			_displace.x *= .8;
-			_displace.y *= .8;
+			_displace.x *= .01;
+			_displace.y *= .01;
 		}
 
 		public function get rotate() : Point {
