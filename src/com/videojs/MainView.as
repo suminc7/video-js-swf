@@ -1,23 +1,21 @@
 package com.videojs  {
 	import flash.display.BitmapData;
-import flash.display.Sprite;
-import flash.events.ErrorEvent;
-import flash.events.Event;
+    import flash.events.ErrorEvent;
+    import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.NetStatusEvent;
-import flash.external.ExternalInterface;
-import flash.geom.Matrix;
+    import flash.geom.Matrix;
 	import flash.media.Video;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
-import flash.ui.Keyboard;
+    import flash.ui.Keyboard;
 
-import gs.TweenLite;
-import org.mangui.hls.utils.Log;
+    import gs.TweenLite;
+    import org.mangui.hls.utils.Log;
 
-import org.papervision3d.materials.BitmapMaterial;
-import org.papervision3d.materials.VideoStreamMaterial;
-import org.papervision3d.objects.primitives.Plane;
+    import org.papervision3d.materials.BitmapMaterial;
+
+    import org.papervision3d.objects.primitives.Plane;
 	import org.papervision3d.objects.primitives.Sphere;
 	import org.papervision3d.view.BasicView;
 
@@ -27,12 +25,7 @@ import org.papervision3d.objects.primitives.Plane;
 	public class MainView extends BasicView {
 		
 		private const URL : String = "";
-//		private const URL : String = "http://www.flashls.org/playlists/test_001/stream.m3u8";
-//		private const URL : String = "videos/14_2160_1080_1472223755054.mp4";
-//		private const URL : String = "https://content.epiqvr.com/local/contents/ADSUuj8PzUOJ1_BiRtJM0l9B79YFZh0dnmB%2BB3_Fdec%3D/vSPs_1p3g94FKLYEYDgndA%3D%3D/2016/09/08/3446/3446_0_0_1473323909824_720p/3446_0_0_1473323909824.m3u8";
-//		private const URL : String = "videos/Metlife.mp4";
-		private const BOTTOM_URL : String = "videos/bottom.flv";
-		private const BOTTOM_SIZE : int = 500;
+
 		
 		private var _videoMatrix : Matrix;
 		private var _mouse360 : Mouse360;
@@ -43,13 +36,7 @@ import org.papervision3d.objects.primitives.Plane;
 		private var _videoWidth : int;
 		private var _videoHeight : int;
 		private var _netStream : NetStream;
-		private var _bottomPlane : Plane;
-		private var _netStreamBottom : NetStream;
-		private var _matrixBottom : Matrix;
-		private var _videoBottom : Video;
-		private var _bitmapDataBottom : BitmapData;
-		private var _drawBottom : Boolean;
-		private var _lookStep:int = 2;
+
 
 		public function MainView() {
 			super(480, 270, true, false, 'free');
@@ -60,7 +47,7 @@ import org.papervision3d.objects.primitives.Plane;
 		private function eAdded(event : Event) : void {
 			init();
 			startRendering();
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, eKeyDown);
+//			stage.addEventListener(KeyboardEvent.KEY_DOWN, eKeyDown);
 		}
 
 		private function eKeyDown(event : KeyboardEvent) : void {
@@ -68,16 +55,16 @@ import org.papervision3d.objects.primitives.Plane;
 				case 32:
 					_sphereMaterial.smooth = !_sphereMaterial.smooth;
 					break;
-//				case 38:
-//					TweenLite.to(camera, 1, {fov:camera.fov + 15, onUpdate:function() : void {
-//						camera.fov = camera.fov;
-//					}});
-//					break;
-//				case 40:
-//					TweenLite.to(camera, 1, {fov:camera.fov - 15, onUpdate:function() : void {
-//						camera.fov = camera.fov;
-//					}});
-//					break;
+				case 38:
+					TweenLite.to(camera, 1, {fov:camera.fov + 15, onUpdate:function() : void {
+						camera.fov = camera.fov;
+					}});
+					break;
+				case 40:
+					TweenLite.to(camera, 1, {fov:camera.fov - 15, onUpdate:function() : void {
+						camera.fov = camera.fov;
+					}});
+					break;
 				case Keyboard.UP:
 					TweenLite.to(camera, 1, {rotationX:camera.rotationX - 30, onUpdate:function() : void {
 						if (camera.rotationX < -90)
@@ -118,30 +105,22 @@ import org.papervision3d.objects.primitives.Plane;
 				camera.rotationX = 90;
 
 			_mouse360.update();
+            _bitmapData.draw(_video, _videoMatrix);
+
+
             try{
             }catch(e:ErrorEvent){
                 Log.info(e);
             }
 
-//            Log.info("init3D 4");
-//            Log.info(_videoWidth);
-//            Log.info(_videoHeight);
-
 
             try {
-                _bitmapData.draw(_video, _videoMatrix);
             }
             catch(error:Error){
                 Log.info(error);
             }
 
 
-//            Log.info(_video);
-//            Log.info("init3D 5");
-//			if (_drawBottom) {
-//				_bitmapDataBottom.fillRect(_bitmapDataBottom.rect, 0x00000000);
-//				_bitmapDataBottom.draw(_videoBottom, _matrixBottom);
-//			}
 		}
 
 		private function init3D() : void {
@@ -220,36 +199,6 @@ import org.papervision3d.objects.primitives.Plane;
 			_videoMatrix = new Matrix();
 		}
 
-//		private function initBottom() : void {
-//			var nc : NetConnection = new NetConnection();
-//			nc.connect(null);
-//			var client : Object = new Object();
-//			client.onMetaData = function(o : Object) : void {
-//				_drawBottom = true;
-//			};
-//
-//			_netStreamBottom = new NetStream(nc);
-//			_netStreamBottom.addEventListener(NetStatusEvent.NET_STATUS, eStatus);
-//			_netStreamBottom.client = client;
-//			_netStreamBottom.play(BOTTOM_URL);
-//
-//			_videoBottom = new Video();
-//			_videoBottom.attachNetStream(_netStreamBottom);
-//			_videoBottom.width = BOTTOM_SIZE;
-//			_videoBottom.height = BOTTOM_SIZE;
-//			_matrixBottom = new Matrix();
-//			_matrixBottom.scale(BOTTOM_SIZE / 320, BOTTOM_SIZE / 240);
-//
-//			_bottomPlane = new Plane(null, 0, 0, 4, 4);
-//			_bitmapDataBottom = new BitmapData(BOTTOM_SIZE, BOTTOM_SIZE, true);
-//			var bbm : BitmapMaterial;
-//			_bottomPlane.material = bbm = new BitmapMaterial(_bitmapDataBottom);
-//			bbm.smooth = true;
-//
-//			_bottomPlane.y = -300;
-//			_bottomPlane.rotationX = 90;
-//			scene.addChild(_bottomPlane);
-//		}
 
 		// RESTART VIDEOS WHEN COMPLETE
 

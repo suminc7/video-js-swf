@@ -65,9 +65,6 @@ package com.videojs {
 
 		private function handleMouseDown(event : MouseEvent) : void {
 			_isMoving = true;
-			_click.x = _stage.mouseY;
-			_click.y = _stage.mouseX;
-			//Mouse.hide();
 			startShape.x = _click.x = _stage.mouseX;
 			startShape.y = _click.y = _stage.mouseY;
 
