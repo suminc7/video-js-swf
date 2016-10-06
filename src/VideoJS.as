@@ -40,8 +40,6 @@ package{
             // Allow JS calls from other domains
             Security.allowDomain("*");
             Security.allowInsecureDomain("*");
-            Security.loadPolicyFile("http://content.epiqvr.com/crossdomain.xml?aa=123");
-            Security.loadPolicyFile("https://content.epiqvr.com/crossdomain.xml?aa=123");
 
             if(loaderInfo.hasOwnProperty("uncaughtErrorEvents")){
                 // we'll want to suppress ANY uncaught debug errors in production (for the sake of ux)
