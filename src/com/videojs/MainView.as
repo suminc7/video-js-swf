@@ -1,11 +1,14 @@
 package com.videojs  {
 	import flash.display.BitmapData;
-    import flash.events.ErrorEvent;
+import flash.display.Stage;
+import flash.events.ErrorEvent;
     import flash.events.Event;
 	import flash.events.KeyboardEvent;
-	import flash.events.NetStatusEvent;
+import flash.events.MouseEvent;
+import flash.events.NetStatusEvent;
     import flash.geom.Matrix;
-	import flash.media.Video;
+import flash.geom.Point;
+import flash.media.Video;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
     import flash.ui.Keyboard;
@@ -24,11 +27,16 @@ package com.videojs  {
 	 */
 	public class MainView extends BasicView {
 		
-		private const URL : String = "";
+		private const URL : String = "https://content.epiqvr.com/prod/contents/fAiCJJErh6PTeVlil08nXdCc8E5kBHJ4rIrI2qeAdiQ%3D/vSPs_1p3g94FKLYEYDgndA%3D%3D/2016/10/28/1203/1203_4096_2048_1477631040533.mp4";
 
-		
+        private var _isMoving : Boolean;
+        private var _stage : Stage;
+        private var _click : Point = new Point();
+        private var _displace : Point = new Point();
+        private var _beforedisplace : Point = new Point();
+
 		private var _videoMatrix : Matrix;
-		private var _mouse360 : Mouse360;
+//		private var _mouse360 : Mouse360;
 		private var _sphere : Sphere;
 		private var _bitmapData : BitmapData;
 		private var _video : Video;
@@ -36,6 +44,9 @@ package com.videojs  {
 		private var _videoWidth : int;
 		private var _videoHeight : int;
 		private var _netStream : NetStream;
+
+		private var _beforeRotationX : Number;
+		private var _beforeRotationY : Number;
 
 
 		public function MainView() {
@@ -45,10 +56,32 @@ package com.videojs  {
 		}
 
 		private function eAdded(event : Event) : void {
+            _stage = stage;
+
 			init();
 			startRendering();
 //			stage.addEventListener(KeyboardEvent.KEY_DOWN, eKeyDown);
+
+            stage.addEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
 		}
+
+        private function handleMouseDown(event : MouseEvent) : void {
+            _isMoving = true;
+            _click.x = _stage.mouseX;
+            _click.y = _stage.mouseY;
+
+            _beforeRotationX = camera.rotationX;
+            _beforeRotationY = camera.rotationY;
+
+            _stage.addEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+            visible = true;
+//			drawArrow();
+        }
+
+        private function handleMouseUp(event : MouseEvent) : void {
+            _isMoving = false;
+            _stage.removeEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
+        }
 
 		private function eKeyDown(event : KeyboardEvent) : void {
 			switch(event.keyCode) {
@@ -90,12 +123,15 @@ package com.videojs  {
 		private function loop3D(event : Event) : void {
 
 
+            if (_isMoving) {
+                _displace.x = (_click.y - _stage.mouseY) * .2 + _beforeRotationX;
+                _displace.y = (_click.x - _stage.mouseX) * .2 + _beforeRotationY;
+            }
 
 
 
-
-			camera.rotationX += _mouse360.rotate.x;
-			camera.rotationY += _mouse360.rotate.y;
+			camera.rotationX = _displace.x;
+			camera.rotationY = _displace.y;
 
 			// max rotation up
 			if (camera.rotationX < -90)
@@ -104,7 +140,7 @@ package com.videojs  {
 			if (camera.rotationX > 90)
 				camera.rotationX = 90;
 
-			_mouse360.update();
+//			_mouse360.update();
             _bitmapData.draw(_video, _videoMatrix);
 
 
@@ -165,7 +201,7 @@ package com.videojs  {
 		private function init() : void {
 
 
-			addChild(_mouse360 = new Mouse360());
+//			addChild(_mouse360 = new Mouse360());
 
 
 			CONFIG::debugging {
